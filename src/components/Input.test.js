@@ -18,10 +18,10 @@ test("does not throw warning with expected props", () => {
 });
 
 describe("state controlle input fiels", () => {
-  let setCurrentGuessMock;
+  let setCurrentGuessMock = jest.fn();
   let wrapper;
   beforeEach(() => {
-    setCurrentGuessMock = jest.fn();
+    setCurrentGuessMock.mockClear();
     React.useState = jest.fn(() => ["", setCurrentGuessMock]);
     wrapper = setup();
   });
