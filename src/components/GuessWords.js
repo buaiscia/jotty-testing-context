@@ -1,16 +1,18 @@
 import React from "react";
 import languageContext from "../contexts/languageContext";
 import { tr } from "../helpers/strings";
+import guessedWordsContext from "../contexts/guessedWordsContext";
 
-const GuessWords = props => {
+const GuessWords = () => {
   const language = React.useContext(languageContext);
+  const [guessedWords] = guessedWordsContext.useGuessedWords();
   let content;
-  if (props.guessedWords.length === 0) {
+  if (guessedWords.length === 0) {
     content = (
       <span data-test="guess-instructions">{tr(language, "guessPrompt")}</span>
     );
   } else {
-    const guessedWordsMap = props.guessedWords.map((word, index) => (
+    const guessedWordsMap = guessedWords.map((word, index) => (
       <tr key={index} data-test="guessed-word">
         <td>{word.guessedWord}</td>
         <td>{word.letterMatchCount}</td>

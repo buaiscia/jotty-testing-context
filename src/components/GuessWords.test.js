@@ -2,15 +2,20 @@ import React from "react";
 import { shallow } from "enzyme";
 import GuessWords from "./GuessWords";
 import { findByTestAttr } from "../test/utils";
+import guessedWordsContext from "../contexts/guessedWordsContext";
 
-const setup = (props = {}) => {
-  return shallow(<GuessWords {...props} />);
+const setup = guesseWords => {
+  const mockUseGuessedWords = jest
+    .fn()
+    .mockReturnValue([guesseWords, jest.fn()]);
+  guessedWordsContext.useGuessedWords = mockUseGuessedWords;
+  return shallow(<GuessWords />);
 };
 
 describe("if there are no words guessed", () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = setup({ guessedWords: [] });
+    wrapper = setup([]);
   });
 
   test("renders without errors", () => {
@@ -31,7 +36,7 @@ describe("if there are words guessed", () => {
     { guessedWord: "party", letterMatchCount: 3 }
   ];
   beforeEach(() => {
-    wrapper = setup({ guessedWords });
+    wrapper = setup(guessedWords);
   });
   test("renders without error", () => {
     const component = findByTestAttr(wrapper, "component-guessed-words");
@@ -49,14 +54,14 @@ describe("if there are words guessed", () => {
 
 describe("language is set correctly", () => {
   test("guess instructions are in english by default", () => {
-    const wrapper = setup({ guessedWords: [] });
+    const wrapper = setup([]);
     const guessInstructions = findByTestAttr(wrapper, "guess-instructions");
     expect(guessInstructions.text()).toBe("Try to guess the secret word!");
   });
   test("guess instructions are in emoji when emoji is selected", () => {
     const mockUseContext = jest.fn().mockReturnValue("emoji");
     React.useContext = mockUseContext;
-    const wrapper = setup({ guessedWords: [] });
+    const wrapper = setup([]);
     const guessInstructions = findByTestAttr(wrapper, "guess-instructions");
     expect(guessInstructions.text()).toBe("🤔🤫🔤");
   });
