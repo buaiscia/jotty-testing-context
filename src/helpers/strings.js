@@ -1,25 +1,25 @@
 const languageStrings = {
   en: {
-   congrats: 'Congratulations! You guessed the word!',
-   submit: 'Submit',
-   guessPrompt: 'Try to guess the secret word!',
-   guessInputPlaceholder: 'enter guess',
-   guessColumnHeader: 'Guessed Words',
-   guessedWords: 'Guesses',
-   matchingLettersColumnHeader: 'Matching Letters',
+    congrats: "Congratulations! You guessed the word!",
+    submit: "Submit",
+    guessPrompt: "Try to guess the secret word!",
+    guessInputPlaceholder: "enter guess",
+    guessColumnHeader: "Guessed Words",
+    guessedWords: "Guesses",
+    matchingLettersColumnHeader: "Matching Letters"
   },
   emoji: {
-   congrats: '🎯🎉',
-   submit: '🚀',
-   guessPrompt: '🤔🤫🔤',
-   guessInputPlaceholder: '⌨️🤔',
-   guessedWords: '🤷‍🔤',
-   guessColumnHeader: '🤷‍',
-   matchingLettersColumnHeader: '✅',
+    congrats: "🎯🎉",
+    submit: "🚀",
+    guessPrompt: "🤔🤫🔤",
+    guessInputPlaceholder: "⌨️🤔",
+    guessedWords: "🤷‍🔤",
+    guessColumnHeader: "🤷‍",
+    matchingLettersColumnHeader: "✅"
   }
-}
+};
 
-function getStringByLanguage(languageCode, stringKey, strings=languageStrings) {
+export function tr(languageCode, stringKey, strings = languageStrings) {
   if (!strings[languageCode] || !strings[languageCode][stringKey]) {
     console.warn(`Could not get string [${stringKey}] for [${languageCode}]`);
 
@@ -32,5 +32,5 @@ function getStringByLanguage(languageCode, stringKey, strings=languageStrings) {
 
 // for future mocking
 export default {
-  getStringByLanguage,
-}
+  tr
+};

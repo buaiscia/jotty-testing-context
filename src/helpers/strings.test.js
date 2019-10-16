@@ -1,5 +1,5 @@
 import stringsModule from "./strings";
-const { getStringByLanguage } = stringsModule;
+const { tr } = stringsModule;
 
 const strings = {
   en: { submit: "submit" },
@@ -21,24 +21,24 @@ describe("language string testing", () => {
   });
 
   test("returns correct submit string for english", () => {
-    const string = getStringByLanguage("en", "submit", strings);
+    const string = tr("en", "submit", strings);
     expect(string).toBe("submit");
     expect(mockWarn).not.toHaveBeenCalled();
   });
   test("returns the correct submit string for emoji", () => {
-    const string = getStringByLanguage("emoji", "submit", strings);
+    const string = tr("emoji", "submit", strings);
     expect(string).toBe("🚀");
     expect(mockWarn).not.toHaveBeenCalled();
   });
   test("returns english submit string when language does not exist", () => {
-    const string = getStringByLanguage("notALanguage", "submit", strings);
+    const string = tr("notALanguage", "submit", strings);
     expect(string).toBe("submit");
     expect(mockWarn).toHaveBeenCalledWith(
       "Could not get string [submit] for [notALanguage]"
     );
   });
   test("returns english submit string when submit key does not exist for language", () => {
-    const string = getStringByLanguage("mermish", "submit", strings);
+    const string = tr("mermish", "submit", strings);
     expect(string).toBe("submit");
     expect(mockWarn).toHaveBeenCalledWith(
       "Could not get string [submit] for [mermish]"
