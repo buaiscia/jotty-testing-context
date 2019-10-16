@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import languageContext from "../contexts/languageContext";
+import { tr } from "../helpers/strings";
 
 const Input = ({ secretWord }) => {
   const [currentGuess, setCurrentGuess] = React.useState("");
+  const language = React.useContext(languageContext);
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -18,7 +21,7 @@ const Input = ({ secretWord }) => {
           data-test="input-box"
           className="mb-2 mx-sm-3"
           type="text"
-          placeholder="enter guess"
+          placeholder={tr(language, "guessInputPlaceholder")}
           value={currentGuess}
           onChange={evt => setCurrentGuess(evt.target.value)}
         />
@@ -27,7 +30,7 @@ const Input = ({ secretWord }) => {
           className="btn btn-primary mb-2"
           onClick={handleSubmit}
         >
-          Submit
+          {tr(language, "submit")}
         </button>
       </form>
     </div>

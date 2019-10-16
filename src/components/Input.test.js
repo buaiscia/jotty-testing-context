@@ -1,14 +1,19 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import Input from "./Input";
 import { findByTestAttr, checkProps } from "../test/utils";
+import languageContext from "../contexts/languageContext";
 
-const setup = (secretWord = "party") => {
-  return shallow(<Input secretWord={secretWord} />);
+const setup = ({ secretWord = "party", language = "en" }) => {
+  return mount(
+    <languageContext.Provider value={language}>
+      <Input secretWord={secretWord} />
+    </languageContext.Provider>
+  );
 };
 
 it("Input renders without error", () => {
-  const wrapper = setup();
+  const wrapper = setup({});
   const component = findByTestAttr(wrapper, "component-input");
   expect(component.length).toBe(1);
 });
@@ -17,13 +22,26 @@ test("does not throw warning with expected props", () => {
   checkProps(Input, { secretWord: "party" });
 });
 
+describe("language is selected properly", () => {
+  test("submit button has submite text in English", () => {
+    const wrapper = setup({});
+    const submitButton = findByTestAttr(wrapper, "submit-button");
+    expect(submitButton.text()).toBe("Submit");
+  });
+  test("submit button has submite text in emoji", () => {
+    const wrapper = setup({ language: "emoji" });
+    const submitButton = findByTestAttr(wrapper, "submit-button");
+    expect(submitButton.text()).toBe("🚀");
+  });
+});
+
 describe("state controlle input fiels", () => {
   let setCurrentGuessMock = jest.fn();
   let wrapper;
   beforeEach(() => {
     setCurrentGuessMock.mockClear();
     React.useState = jest.fn(() => ["", setCurrentGuessMock]);
-    wrapper = setup();
+    wrapper = setup({});
   });
   test("state updates with value of input box upon change", () => {
     const inputBox = findByTestAttr(wrapper, "input-box");
