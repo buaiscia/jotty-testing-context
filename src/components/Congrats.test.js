@@ -3,6 +3,7 @@ import { mount } from "enzyme";
 import Congrats from "./Congrats";
 import { findByTestAttr } from "../test/utils";
 import languageContext from "../contexts/languageContext";
+import successContext from "../contexts/successContext";
 
 /**
  * Factory to create e Shallow Wrapper for the Congrats component
@@ -12,7 +13,9 @@ import languageContext from "../contexts/languageContext";
 const setup = ({ success = false, language = "en" }) => {
   return mount(
     <languageContext.Provider value={language}>
-      <Congrats success={success} />
+      <successContext.SuccessProvider value={[success, jest.fn()]}>
+        <Congrats success={success} />
+      </successContext.SuccessProvider>
     </languageContext.Provider>
   );
 };
@@ -33,12 +36,12 @@ test("renders without error", () => {
   const component = findByTestAttr(wrapper, "component-congrats");
   expect(component.length).toBe(1);
 });
-test("renders no text when success prop is false", () => {
+test("renders no text when success  is false", () => {
   const wrapper = setup({ success: false });
   const component = findByTestAttr(wrapper, "component-congrats");
   expect(component.text()).toBe("");
 });
-test("renders no empty text when 'success' prop is true", () => {
+test("renders no empty text when 'success'  is true", () => {
   const wrapper = setup({ success: true });
   const message = findByTestAttr(wrapper, "congrats-message");
   expect(message.text().length).not.toBe(0);
