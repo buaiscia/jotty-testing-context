@@ -17,10 +17,9 @@ function useGuessedWords() {
 function GuessedWordsProvider(props) {
   const [guessedWords, setGuessedWords] = React.useState([]);
 
-  const value = React.useMemo(
-    () => [guessedWords, setGuessedWords],
+  const value = React.useMemo(() => [guessedWords, setGuessedWords], [
     guessedWords
-  );
+  ]);
 
   return <guessedWordsContext.Provider value={value} {...props} />;
 }

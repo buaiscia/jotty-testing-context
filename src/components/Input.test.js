@@ -3,11 +3,17 @@ import { mount } from "enzyme";
 import Input from "./Input";
 import { findByTestAttr, checkProps } from "../test/utils";
 import languageContext from "../contexts/languageContext";
+import successContext from "../contexts/successContext";
+import guessedWordsContext from "../contexts/guessedWordsContext";
 
-const setup = ({ secretWord = "party", language = "en" }) => {
+const setup = ({ secretWord = "party", language = "en", success = false }) => {
   return mount(
     <languageContext.Provider value={language}>
-      <Input secretWord={secretWord} />
+      <successContext.SuccessProvider value={[success, jest.fn()]}>
+        <guessedWordsContext.GuessedWordsProvider>
+          <Input secretWord={secretWord} />
+        </guessedWordsContext.GuessedWordsProvider>
+      </successContext.SuccessProvider>
     </languageContext.Provider>
   );
 };
@@ -55,4 +61,9 @@ describe("state controlle input fiels", () => {
     submitButton.simulate("click", mockEvent);
     expect(setCurrentGuessMock).toHaveBeenCalledWith("");
   });
+});
+
+test("do not render if success is true", () => {
+  const wrapper = setup({ secretWord: "party", success: true });
+  expect(wrapper.isEmptyRender()).toBe(true);
 });
