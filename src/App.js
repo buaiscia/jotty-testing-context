@@ -24,6 +24,7 @@ function App() {
     secretWord: null,
     language: "en"
   });
+  const [showSecret, setShowSecret] = React.useState(false);
 
   const setSecretWord = secretWord =>
     dispatch({ type: "setSecretWord", payload: secretWord });
@@ -48,6 +49,7 @@ function App() {
   return (
     <div data-test="component-app" className="container">
       <h1>Jotto</h1>
+
       <languageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
         <guessedWordsContext.GuessedWordsProvider>
@@ -58,6 +60,11 @@ function App() {
           <GuessWords />
         </guessedWordsContext.GuessedWordsProvider>
       </languageContext.Provider>
+      <button onClick={() => setShowSecret(true)}>Show the secret word</button>
+      <div style={{ display: showSecret ? "inline-block" : "none" }}>
+        {" "}
+        {state.secretWord}
+      </div>
     </div>
   );
 }

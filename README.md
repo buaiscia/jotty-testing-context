@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is an example of testing with Jest and Enzyme.
+The React app use hooks and context to manage the state.
 
 ## Available Scripts
 
