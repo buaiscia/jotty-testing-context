@@ -40,7 +40,7 @@ describe("language string testing", () => {
   test("returns english submit string when submit key does not exist for language", () => {
     const string = tr("mermish", "submit", strings);
     expect(string).toBe("submit");
-    expect(mockWarn).toHaveBeenCalledWith(
+    expect(mockWarn).not.toHaveBeenCalledWith(
       "Could not get string [submit] for [mermish]"
     );
   });
