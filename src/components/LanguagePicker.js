@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 const languages = [
   { code: "en", symbol: "🇺🇸" },
+  { code: "it", symbol: "IT" },
   { code: "emoji", symbol: "😊" }
 ];
 
